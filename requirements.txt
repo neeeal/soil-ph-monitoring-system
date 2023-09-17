@@ -1,0 +1,7 @@
+tensorflow
+rembg
+opencv-python
+numpy==1.23.5
+numba
+matplotlib
+shutil
