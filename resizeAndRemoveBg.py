@@ -10,12 +10,12 @@ dataPath = "pngData"
 noBgDataPath="noBgData"
 classes = os.listdir(dataPath)
 path = "data"
-input_shape = (224,224)
+input_shape = (416,416) # changed from 224x224
 train = 0.80
 val = 1. - train
 trainPath = os.path.join(path,"train")
 valPath = os.path.join(path,"val")
-PATHS = [trainPath, valPath]
+paths = [trainPath, valPath]
 
 
 
@@ -55,7 +55,7 @@ for c in classes:
 
 ## CHECKING IF TRAIN AND VAL PATHS EXISTS
 ## IF SO, DELETE, IF NOT THEN CREATE
-for path in PATHS:
+for path in paths:
     pass
     if os.path.exists(path): 
         shutil.rmtree(path)
@@ -80,4 +80,4 @@ for c in classes:
             setClassPath = os.path.join(valPath,c)
         imagePath = os.path.join(classPath,image)
         newImagePath = os.path.join(setClassPath,image)
-        shutil.copy(imagePath, newImagePath)
+        shutil.move(imagePath, newImagePath)
