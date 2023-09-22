@@ -6,11 +6,10 @@ from PIL import Image
 from rembg import remove
 
 ## Variable Declerations
-dataPath = "pngData"
-noBgDataPath="noBgData"
-classes = os.listdir(dataPath)
+preprocessingPath="preprocessingData"
+classes = os.listdir(preprocessingPath)
 path = "data"
-input_shape = (416,416) # changed from 224x224
+input_shape = (224,224) # changed from 224x224
 train = 0.80
 val = 1. - train
 trainPath = os.path.join(path,"train")
@@ -24,15 +23,15 @@ paths = [trainPath, valPath]
 ## src: https://www.geeksforgeeks.org/how-to-remove-the-background-from-an-image-using-python/
   
 
-# CHECKS IF DATA DIRECTORIES EXISTS
-# DELETE IF SO, CREATE OTHERWISE
-for c in classes:
-    classPath = os.path.join(noBgDataPath,c)
-    if os.path.exists(classPath): shutil.rmtree(classPath); os.mkdir(classPath)
-    else: os.mkdir(classPath)
+# # CHECKS IF DATA DIRECTORIES EXISTS
+# # DELETE IF SO, CREATE OTHERWISE
+# for c in classes:
+#     classPath = os.path.join(preprocessingPath,c)
+#     if os.path.exists(classPath): shutil.rmtree(classPath); os.mkdir(classPath)
+#     else: os.mkdir(classPath)
 
 for c in classes:
-    classPath = os.path.join(dataPath,c)
+    classPath = os.path.join(preprocessingPath,c)
     images = os.listdir(classPath)
     for image in images:
         imagePath = os.path.join(classPath,image)
@@ -49,35 +48,5 @@ for c in classes:
         output = remove(input)
         
         #Saving the image in the given path
-        output_path = imagePath.replace(dataPath,noBgDataPath)
+        output_path = imagePath.replace(preprocessingPath,preprocessingPath)
         output.save(output_path)
-
-
-## CHECKING IF TRAIN AND VAL PATHS EXISTS
-## IF SO, DELETE, IF NOT THEN CREATE
-for path in paths:
-    pass
-    if os.path.exists(path): 
-        shutil.rmtree(path)
-        os.mkdir(path)
-        for c in classes:
-            classPath = os.path.join(path,c)
-            os.mkdir(classPath)
-    else: 
-        os.mkdir(path)
-        for c in classes:
-            classPath = os.path.join(path,c)
-            os.mkdir(classPath)
-
-## SEPARATING TO TRAIN AND VALIDATION SETS
-for c in classes:
-    classPath = os.path.join(noBgDataPath,c)
-    images = os.listdir(classPath)
-    numImages = len(images)
-    setClassPath = os.path.join(trainPath,c)
-    for n,image in enumerate(images):
-        if n == round(numImages*train): 
-            setClassPath = os.path.join(valPath,c)
-        imagePath = os.path.join(classPath,image)
-        newImagePath = os.path.join(setClassPath,image)
-        shutil.move(imagePath, newImagePath)

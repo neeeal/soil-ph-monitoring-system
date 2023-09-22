@@ -5,9 +5,10 @@ import shutil
 path = "jpgData"
 dirs = [os.path.join(path,dir) for dir in os.listdir(path)]
 classes = os.listdir(path)
+newPath = 'preprocessingData'
 
 for c in classes:
-    classPath = os.path.join("pngData",c)
+    classPath = os.path.join(newPath,c)
     if os.path.exists(classPath): shutil.rmtree(classPath); os.mkdir(classPath)
     else: os.mkdir(classPath)
 
@@ -17,4 +18,4 @@ for dir in dirs:
         oldImages.append(os.path.join(dir,image))
 
 for image in oldImages:
-    shutil.copy(image, image.replace(path,'pngData',1).replace("jpg","png"))
+    shutil.copy(image, image.replace(path,newPath,1).replace("jpg","png"))
