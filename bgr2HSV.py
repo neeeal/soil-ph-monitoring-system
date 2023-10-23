@@ -12,6 +12,7 @@ for c in classes:
     for image in os.listdir(classPath):
         imagePath = os.path.join(classPath,image)
         image = cv2.imread(imagePath)
+        image[:,:,:2] = image[:,:,:2] * 0
         hsvImage = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         secondImagePath = imagePath.replace(preprocessingPath, secondStepPreprocessing)
         cv2.imwrite(secondImagePath,hsvImage)
