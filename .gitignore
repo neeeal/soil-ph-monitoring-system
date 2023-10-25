@@ -5,3 +5,5 @@ replaceFileName.py
 step-step
 waterhsv
 secondStep_preprocessingData
+segmented_regions
+region_watershed
