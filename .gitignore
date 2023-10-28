@@ -8,3 +8,4 @@ secondStep_preprocessingData
 segmented_regions
 region_watershed
 stitch-rgb
+stitch-hsv

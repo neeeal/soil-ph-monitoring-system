@@ -2,7 +2,7 @@ import os
 import shutil
 import numpy as np
 
-preprocessingPath="stitch-rgb"
+preprocessingPath="stitch-hsv"
 path = "data"
 classes = os.listdir(preprocessingPath)
 trainPath = os.path.join(path,"train")
