@@ -130,7 +130,7 @@ for image in oldImages:
         hue, sat, val = new_image.split()
         val = val.point(lambda i : i * 0)
         new_image = Image.merge(new_image.mode,(hue,sat,val)) ## set value to zero, only hue and saturation
-        new_image.split()[1].save(image.replace(path,newPath,1))        
+        new_image.save(image.replace(path,newPath,1))        
 
     except Exception as e:
         print(e, image)
