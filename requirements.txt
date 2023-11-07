@@ -4,5 +4,5 @@ opencv-python
 numpy==1.23.5
 numba
 matplotlib
-sklearn
+scikit-learn
 scipy
