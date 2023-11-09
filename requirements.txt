@@ -6,3 +6,4 @@ numba
 matplotlib
 scikit-learn
 scipy
+pandas
