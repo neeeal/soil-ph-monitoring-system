@@ -40,16 +40,10 @@ for image in oldImages:
     # Foreground area
     ret, sure_fg = cv2.threshold(dist, 0.5 * dist.max(), 255, cv2.THRESH_BINARY)
     sure_fg = sure_fg.astype(np.uint8)
-    # Unknown area
-    unknown = cv2.subtract(sure_bg, sure_fg)
-    markers = cv2.connectedComponents(sure_fg)[1]
-    markers += 1
-    markers[unknown == 255] = 0
-    region_mask = np.where(markers == np.unique(markers)[-1], 255, 0).astype(np.uint8)
 
     new_image_size=128
     # Apply the mask to the original image to extract the region
-    region = cv2.bitwise_and(orig_img, orig_img, mask=region_mask)
+    region = cv2.bitwise_and(orig_img, orig_img, mask=sure_fg)
     # Find the bounding box coordinates (non-zero pixels)
     non_zero_coords = np.argwhere(region > 0)
     min_y, min_x, _ = non_zero_coords.min(axis=0)
