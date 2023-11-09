@@ -21,7 +21,7 @@ for dir in dirs:
 
 for image in oldImages:
     # Load image
-    img = cv2.imread(image)
+    img = cv2.imread(image)#[100:300, 100:300, :]
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     orig_img = img.copy()
 
@@ -40,10 +40,16 @@ for image in oldImages:
     # Foreground area
     ret, sure_fg = cv2.threshold(dist, 0.5 * dist.max(), 255, cv2.THRESH_BINARY)
     sure_fg = sure_fg.astype(np.uint8)
+    # Unknown area
+    unknown = cv2.subtract(sure_bg, sure_fg)
+    markers = cv2.connectedComponents(sure_fg)[1]
+    markers += 1
+    markers[unknown == 255] = 0
+    region_mask = np.where(markers == np.unique(markers)[-1], 255, 0).astype(np.uint8)
 
-    new_image_size = 128
+    new_image_size=128
     # Apply the mask to the original image to extract the region
-    region = cv2.bitwise_and(orig_img, orig_img, mask=sure_fg)
+    region = cv2.bitwise_and(orig_img, orig_img, mask=region_mask)
     # Find the bounding box coordinates (non-zero pixels)
     non_zero_coords = np.argwhere(region > 0)
     min_y, min_x, _ = non_zero_coords.min(axis=0)
@@ -52,17 +58,15 @@ for image in oldImages:
     cropped_region = region[min_y:max_y + 1, min_x:max_x + 1]
     cropped_region = cv2.resize(cropped_region, (new_image_size, new_image_size))
 
-
     rgb_planes = cv2.split(cropped_region)
     result_planes = []
     # Create a CLAHE object.
-    clahe = cv2.createCLAHE(tileGridSize=(5,5),clipLimit=3)
+    clahe = cv2.createCLAHE(tileGridSize=(3,3),clipLimit=10)
     for plane in rgb_planes:
         processed_image = cv2.medianBlur(plane, 7)
         processed_image = clahe.apply(processed_image) 
         result_planes.append(processed_image)
     result = cv2.merge(result_planes)
-
 
     HSV = cv2.cvtColor(result,cv2.COLOR_RGB2HSV)
     H,S,V = cv2.split(HSV)
