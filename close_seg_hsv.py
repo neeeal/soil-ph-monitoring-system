@@ -32,9 +32,6 @@ for image in oldImages:
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     bin_img = cv2.morphologyEx(bin_img, cv2.MORPH_CLOSE, kernel, iterations=7)
     bin_img = cv2.dilate(bin_img, kernel, iterations=5)
-    # Sure background area
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-    sure_bg = cv2.dilate(bin_img, kernel, iterations=10)
     # Distance transform
     dist = cv2.distanceTransform(bin_img, cv2.DIST_L2, 5)
     # Foreground area
