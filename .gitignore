@@ -9,3 +9,11 @@ segmented_regions
 region_watershed
 stitch-rgb
 stitch-hsv
+close_seg
+data
+audmented_data
+docu_images
+plots
+preprocessing_data
+waterrgb
+df
