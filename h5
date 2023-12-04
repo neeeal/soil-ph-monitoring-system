@@ -1,0 +1,2 @@
+Tracking "*"
+Pattern '*' matches forbidden file '.gitignore'. If you would like to track .gitignore, modify '.gitattributes' manually.
