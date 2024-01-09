@@ -9,6 +9,7 @@ segmented_regions
 region_watershed
 stitch-rgb
 stitch-hsv
+archives
 close_seg
 data
 audmented_data
